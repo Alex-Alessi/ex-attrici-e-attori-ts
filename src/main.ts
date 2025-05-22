@@ -107,3 +107,10 @@ async function getAllActresses(): Promise<Actress[]> {
     return [];
   }
 }
+
+function getActresses(idArray: number[]): Promise<(Actress | null)[]> {
+  const listaAttrici: Promise<Actress | null>[] = idArray.map((i) =>
+    getActress(i)
+  );
+  return Promise.all(listaAttrici);
+}
