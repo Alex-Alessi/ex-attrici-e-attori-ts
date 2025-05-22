@@ -87,3 +87,23 @@ async function getActress(id: number): Promise<Actress | null> {
     return null;
   }
 }
+
+async function getAllActresses(): Promise<Actress[]> {
+  try {
+    const response = await fetch(`${API_URL}/actresses`);
+    if (!response.ok) {
+      throw new Error(
+        "Errore HTTP" + response.status + " :" + response.statusText
+      );
+    }
+    const dati: unknown = await response.json();
+    if (!(dati instanceof Array)) {
+      throw new Error("Non è un array");
+    }
+    const attrici: Actress[] = dati.filter((a) => isActress(a));
+    return attrici;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
